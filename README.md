@@ -177,6 +177,19 @@ This opens a GUI where you can:
 3. Manually adjust bounding box positions
 4. Save corrections
 
+<p align="center">
+  <img src="docs/assets/interactive_tool_screenshot.png" width="90%" alt="Interactive Correction Tool Screenshot"/>
+</p>
+<p align="center"><em>The Interactive Correction Tool GUI - Load your data, visualize alignments, and manually fine-tune corrections</em></p>
+
+**Features:**
+- **Side-by-side view**: Thermal image (left) and RGB image with bounding boxes (right)
+- **Real-time preview**: See original bbox (red) and shifted bbox (green) simultaneously
+- **Manual adjustment**: Use X/Y spinboxes to fine-tune the shift
+- **Auto-correct suggestion**: Click "Auto Correct" to get algorithm-suggested shifts
+- **Keyboard navigation**: Use arrow keys to quickly browse through samples
+- **Batch saving**: Apply corrections and save all at once
+
 ## 📐 How It Works
 
 ### Template Matching with Multiple Methods
