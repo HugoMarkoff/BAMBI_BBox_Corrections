@@ -41,8 +41,8 @@ In our testing on **406 samples**:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/thermal-rgb-bbox-correction.git
-cd thermal-rgb-bbox-correction
+git clone https://github.com/HugoMarkoff/BAMBI_BBox_Corrections.git
+cd BAMBI_BBox_Corrections
 
 # Install dependencies
 pip install -r requirements.txt
