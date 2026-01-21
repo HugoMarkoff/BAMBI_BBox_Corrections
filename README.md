@@ -143,6 +143,13 @@ your_data/
 
 ### Automatic Batch Correction
 
+**Quick Test (uses included sample data):**
+```bash
+# Just run with defaults to test on sample_data
+python correct_bboxes.py
+```
+
+**Use with your own data:**
 ```bash
 python correct_bboxes.py \
     --thermal-dir ./your_data/thermal \
@@ -155,9 +162,9 @@ python correct_bboxes.py \
 **Arguments:**
 | Argument | Description | Default |
 |----------|-------------|---------|
-| `--thermal-dir` | Path to thermal images directory | Required |
-| `--rgb-dir` | Path to RGB images directory | Required |
-| `--labels-dir` | Path to labels (YOLO .txt or JSON metadata) | Required |
+| `--thermal-dir` | Path to thermal images directory | `./sample_data/thermal` |
+| `--rgb-dir` | Path to RGB images directory | `./sample_data/rgb` |
+| `--labels-dir` | Path to labels (YOLO .txt or JSON metadata) | `./sample_data/labels` |
 | `--output-dir` | Output directory for corrected labels | `./output` |
 | `--tolerance` | Pixel tolerance for clustering shifts (±N pixels) | `10` |
 | `--min-consensus` | Minimum consensus score to accept correction | `0.4` |
@@ -217,10 +224,13 @@ This approach is robust because:
 
 ## 🧪 Testing with Sample Data
 
-Sample data is included for testing:
+Sample data is included for testing the toolkit:
 
 ```bash
-# Test with included sample data
+# Quick test - runs with sample data by default
+python correct_bboxes.py
+
+# Or explicitly specify sample data paths
 python correct_bboxes.py \
     --thermal-dir ./sample_data/thermal \
     --rgb-dir ./sample_data/rgb \
@@ -228,6 +238,11 @@ python correct_bboxes.py \
     --output-dir ./test_output \
     --save-viz
 ```
+
+**Note about sample data:** The included sample images may already be well-aligned (showing minimal or no corrections needed). This is normal for pre-processed demonstration data. The tool will show meaningful corrections when run on data with actual thermal-to-RGB misalignment. To test the correction capability, you can:
+- Use your own misaligned thermal/RGB data
+- Manually introduce shifts in the sample labels to test correction
+- Run the interactive tool to visualize and manually test different shifts
 
 ## 📂 Repository Structure
 

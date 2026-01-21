@@ -82,6 +82,9 @@ class AutoCorrectionTool:
         """
         print("=" * 70)
         print("THERMAL-RGB BBOX AUTOMATIC CORRECTION")
+        print(f"Thermal dir: {self.thermal_dir}")
+        print(f"RGB dir: {self.rgb_dir}")
+        print(f"Labels dir: {self.labels_dir}")
         print(f"Tolerance: ±{self.tolerance}px")
         print(f"Min consensus score: {self.min_consensus_score}")
         print(f"Min detection coverage: {self.min_detection_coverage:.0%}")
@@ -570,23 +573,26 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  # Basic usage with YOLO labels
-  python correct_bboxes.py --thermal-dir ./thermal --rgb-dir ./rgb --labels-dir ./labels
+  # Run with default sample data (for testing)
+  python correct_bboxes.py
+
+  # Use your own data with YOLO labels
+  python correct_bboxes.py --thermal-dir ./your_data/thermal --rgb-dir ./your_data/rgb --labels-dir ./your_data/labels
 
   # With JSON metadata
-  python correct_bboxes.py --thermal-dir ./thermal --rgb-dir ./rgb --labels-dir ./metadata
+  python correct_bboxes.py --thermal-dir ./your_data/thermal --rgb-dir ./your_data/rgb --labels-dir ./your_data/metadata
 
   # With visualization output
-  python correct_bboxes.py --thermal-dir ./thermal --rgb-dir ./rgb --labels-dir ./labels --save-viz
+  python correct_bboxes.py --thermal-dir ./your_data/thermal --rgb-dir ./your_data/rgb --labels-dir ./your_data/labels --save-viz
         """
     )
     
-    parser.add_argument('--thermal-dir', required=True,
-                        help='Path to thermal images directory')
-    parser.add_argument('--rgb-dir', required=True,
-                        help='Path to RGB images directory')
-    parser.add_argument('--labels-dir', required=True,
-                        help='Path to labels (YOLO .txt or JSON metadata)')
+    parser.add_argument('--thermal-dir', default='./sample_data/thermal',
+                        help='Path to thermal images directory (default: ./sample_data/thermal)')
+    parser.add_argument('--rgb-dir', default='./sample_data/rgb',
+                        help='Path to RGB images directory (default: ./sample_data/rgb)')
+    parser.add_argument('--labels-dir', default='./sample_data/labels',
+                        help='Path to labels - YOLO .txt or JSON metadata (default: ./sample_data/labels)')
     parser.add_argument('--output-dir', default='./output',
                         help='Output directory for corrected labels (default: ./output)')
     parser.add_argument('--tolerance', type=int, default=10,
