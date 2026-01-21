@@ -1,0 +1,18 @@
+# Thermal-RGB BBox Correction Toolkit
+# Requirements
+
+# Core dependencies
+numpy>=1.21.0
+opencv-python>=4.5.0
+Pillow>=9.0.0
+
+# Visualization
+matplotlib>=3.5.0
+
+# GUI support (Tkinter is included with standard Python)
+# For Linux, you may need: sudo apt-get install python3-tk
+
+# Optional: for development
+# pytest>=7.0.0
+# black>=22.0.0
+# flake8>=4.0.0

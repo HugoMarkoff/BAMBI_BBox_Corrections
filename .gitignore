@@ -1,0 +1,70 @@
+# Ignore all resources/data folders (large data)
+images/
+rgb_images/
+labels/
+metadata/
+mot/
+consensus_samples/
+corrected_metadata/
+output/
+resources/
+__pycache__/
+
+# Keep sample data for testing
+!sample_data/
+
+# Old/development scripts (not needed for public repo)
+analyze_consistency.py
+analyze_offsets.py
+auto_correction.py
+batch_auto_correct.py
+bbox_correction_tool.py
+bbox_correction_tool_v2.py
+consensus_correction.py
+diagnostic_test.py
+interactive_correction.py
+test_global_shift.py
+visualize_consistent.py
+visualize_frame.py
+*.png
+!docs/assets/*.png
+
+# Python
+*.py[cod]
+__pycache__/
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+bin/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+lib/
+lib64/
+venv/
+.env/
+.venv/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Local testing outputs
+test_output/
+*.json.bak
