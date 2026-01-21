@@ -19,10 +19,10 @@ analyze_offsets.py
 auto_correction.py
 batch_auto_correct.py
 bbox_correction_tool.py
-bbox_correction_tool_v2.py
 consensus_correction.py
 diagnostic_test.py
 interactive_correction.py
+interactive_tool.py
 test_global_shift.py
 visualize_consistent.py
 visualize_frame.py

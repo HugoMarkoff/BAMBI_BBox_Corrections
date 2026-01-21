@@ -72,13 +72,12 @@ class AutoCorrectionTool:
             'single_detection_corrections': 0
         }
     
-    def run(self, save_visualizations: bool = True, viz_interval: int = 100):
+    def run(self, save_visualizations: bool = True):
         """
         Run automatic correction on all data.
         
         Args:
             save_visualizations: Whether to save visualization images
-            viz_interval: Save visualization every N corrections
         """
         print("=" * 70)
         print("THERMAL-RGB BBOX AUTOMATIC CORRECTION")
@@ -122,7 +121,7 @@ class AutoCorrectionTool:
         # Process multi-detection frames with consensus
         print(f"\nProcessing multi-detection frames...")
         multi_corrections = self._process_multi_detection_frames(
-            multi_detection_frames, viz_dir, viz_interval, save_visualizations
+            multi_detection_frames, viz_dir, save_visualizations
         )
         
         # Process single-detection frames
@@ -224,11 +223,10 @@ class AutoCorrectionTool:
         return samples
     
     def _process_multi_detection_frames(self, frames: dict, viz_dir: Path,
-                                        viz_interval: int, save_viz: bool) -> list:
+                                        save_viz: bool) -> list:
         """Process frames with multiple detections using consensus."""
         corrections = []
         processed = 0
-        last_viz_count = 0
         
         for frame_key, samples in frames.items():
             processed += 1
@@ -342,12 +340,11 @@ class AutoCorrectionTool:
                 self.stats['consensus_found'] += 1
                 self.stats['multi_detection_corrections'] += len(samples)
                 
-                # Save visualization periodically
-                if save_viz and len(corrections) - last_viz_count >= viz_interval:
-                    last_viz_count = len(corrections)
+                # Save visualization for each frame
+                if save_viz:
                     self._save_visualization(
                         sample_data_cache, dx, dy, viz_dir, 
-                        f"batch_{len(corrections):03d}_{frame_key}"
+                        f"frame_{frame_key}"
                     )
             else:
                 self.stats['no_consensus'] += 1
@@ -423,7 +420,7 @@ class AutoCorrectionTool:
     
     def _save_visualization(self, sample_data_cache: dict, dx: int, dy: int,
                            viz_dir: Path, filename: str):
-        """Save a visualization of the correction."""
+        """Save a 3-panel visualization: Thermal, RGB Original, RGB Corrected."""
         if not sample_data_cache:
             return
         
@@ -433,10 +430,23 @@ class AutoCorrectionTool:
         thermal_img = first_data['thermal_img']
         rgb_img = first_data['rgb_img']
         
-        fig, axes = plt.subplots(1, 2, figsize=(14, 7))
+        fig, axes = plt.subplots(1, 3, figsize=(18, 6))
         
-        # Original
-        ax1 = axes[0]
+        # 1. Thermal image with bboxes
+        ax0 = axes[0]
+        thermal_display = cv2.cvtColor(thermal_img.copy(), cv2.COLOR_BGR2RGB)
+        for det_data in sample_data_cache.values():
+            bbox = det_data['sample']['bbox']
+            cv2.rectangle(thermal_display,
+                         (bbox['x_min'], bbox['y_min']),
+                         (bbox['x_max'], bbox['y_max']),
+                         (0, 255, 0), 2)
+        ax0.imshow(thermal_display)
+        ax0.set_title('Thermal (Ground Truth)', fontsize=12, fontweight='bold')
+        ax0.axis('off')
+        
+        # 2. RGB with Original bbox position (red)
+        ax1 = axes[1]
         rgb_display = cv2.cvtColor(rgb_img.copy(), cv2.COLOR_BGR2RGB)
         for det_data in sample_data_cache.values():
             bbox = det_data['sample']['bbox']
@@ -445,22 +455,24 @@ class AutoCorrectionTool:
                          (bbox['x_max'], bbox['y_max']),
                          (255, 0, 0), 2)
         ax1.imshow(rgb_display)
-        ax1.set_title('Original BBox Position')
+        ax1.set_title('RGB - Original Position', fontsize=12, fontweight='bold')
         ax1.axis('off')
         
-        # Corrected
-        ax2 = axes[1]
+        # 3. RGB with Corrected bbox position (green)
+        ax2 = axes[2]
         rgb_display2 = cv2.cvtColor(rgb_img.copy(), cv2.COLOR_BGR2RGB)
+        dx_int, dy_int = int(round(dx)), int(round(dy))
         for det_data in sample_data_cache.values():
             bbox = det_data['sample']['bbox']
             cv2.rectangle(rgb_display2,
-                         (bbox['x_min'] + dx, bbox['y_min'] + dy),
-                         (bbox['x_max'] + dx, bbox['y_max'] + dy),
+                         (bbox['x_min'] + dx_int, bbox['y_min'] + dy_int),
+                         (bbox['x_max'] + dx_int, bbox['y_max'] + dy_int),
                          (0, 255, 0), 2)
         ax2.imshow(rgb_display2)
-        ax2.set_title(f'Corrected (shift: {dx}, {dy})')
+        ax2.set_title(f'RGB - Corrected (shift: {dx_int:+d}, {dy_int:+d}px)', fontsize=12, fontweight='bold')
         ax2.axis('off')
         
+        plt.suptitle(f'Frame: {filename}', fontsize=14, fontweight='bold')
         plt.tight_layout()
         plt.savefig(viz_dir / f"{filename}.png", dpi=100, bbox_inches='tight')
         plt.close()
@@ -479,6 +491,11 @@ class AutoCorrectionTool:
         
         # Save correction log
         log_path = self.output_dir / 'correction_log.json'
+        print(f"\n📁 Output saved to: {self.output_dir.absolute()}")
+        print(f"   - correction_log.json: {log_path}")
+        if self.label_format == 'metadata':
+            print(f"   - Corrected metadata files in: {self.output_dir}")
+        
         log_data = {
             'timestamp': datetime.now().isoformat(),
             'settings': {
@@ -578,6 +595,11 @@ class AutoCorrectionTool:
             avg_dx = sum(s[0] for s in shifts) / len(shifts)
             avg_dy = sum(s[1] for s in shifts) / len(shifts)
             print(f"\nAverage shift: ({avg_dx:.1f}, {avg_dy:.1f}) pixels")
+        
+        viz_dir = self.output_dir / 'visualizations'
+        if viz_dir.exists() and any(viz_dir.iterdir()):
+            print(f"\n📊 Visualizations saved to: {viz_dir.absolute()}")
+        print("\n" + "=" * 70)
 
 
 def main():
@@ -596,7 +618,7 @@ Examples:
   python correct_bboxes.py --thermal-dir ./your_data/thermal --rgb-dir ./your_data/rgb --labels-dir ./your_data/metadata
 
   # With visualization output
-  python correct_bboxes.py --thermal-dir ./your_data/thermal --rgb-dir ./your_data/rgb --labels-dir ./your_data/labels --save-viz
+  python correct_bboxes.py --thermal-dir ./your_data/thermal --rgb-dir ./your_data/rgb --labels-dir ./your_data/labels
         """
     )
     
@@ -614,10 +636,8 @@ Examples:
                         help='Minimum consensus score to accept correction (default: 0.4)')
     parser.add_argument('--min-coverage', type=float, default=0.67,
                         help='Minimum fraction of detections that must agree (default: 0.67)')
-    parser.add_argument('--save-viz', action='store_true',
-                        help='Save visualization samples')
-    parser.add_argument('--viz-interval', type=int, default=100,
-                        help='Save visualization every N corrections (default: 100)')
+    parser.add_argument('--no-viz', action='store_true',
+                        help='Disable visualization output (enabled by default)')
     
     args = parser.parse_args()
     
@@ -631,7 +651,7 @@ Examples:
         min_detection_coverage=args.min_coverage
     )
     
-    tool.run(save_visualizations=args.save_viz, viz_interval=args.viz_interval)
+    tool.run(save_visualizations=not args.no_viz)
 
 
 if __name__ == '__main__':
