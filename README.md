@@ -164,7 +164,7 @@ python correct_bboxes.py \
 |----------|-------------|---------|
 | `--thermal-dir` | Path to thermal images directory | `./sample_data/thermal` |
 | `--rgb-dir` | Path to RGB images directory | `./sample_data/rgb` |
-| `--labels-dir` | Path to labels (YOLO .txt or JSON metadata) | `./sample_data/labels` |
+| `--labels-dir` | Path to labels - YOLO .txt or JSON metadata (default: ./sample_data/metadata) |
 | `--output-dir` | Output directory for corrected labels | `./output` |
 | `--tolerance` | Pixel tolerance for clustering shifts (±N pixels) | `10` |
 | `--min-consensus` | Minimum consensus score to accept correction | `0.4` |

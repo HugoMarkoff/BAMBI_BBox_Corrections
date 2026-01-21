@@ -591,8 +591,8 @@ Examples:
                         help='Path to thermal images directory (default: ./sample_data/thermal)')
     parser.add_argument('--rgb-dir', default='./sample_data/rgb',
                         help='Path to RGB images directory (default: ./sample_data/rgb)')
-    parser.add_argument('--labels-dir', default='./sample_data/labels',
-                        help='Path to labels - YOLO .txt or JSON metadata (default: ./sample_data/labels)')
+    parser.add_argument('--labels-dir', default='./sample_data/metadata',
+                        help='Path to labels - YOLO .txt or JSON metadata (default: ./sample_data/metadata)')
     parser.add_argument('--output-dir', default='./output',
                         help='Output directory for corrected labels (default: ./output)')
     parser.add_argument('--tolerance', type=int, default=10,
