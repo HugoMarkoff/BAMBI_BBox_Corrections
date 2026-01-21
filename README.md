@@ -1,9 +1,9 @@
 # 🔥 Thermal-RGB BBox Correction Toolkit
 
 <p align="center">
-  <img src="docs/assets/example_good_1.png" width="32%" alt="Good correction example 1"/>
-  <img src="docs/assets/example_good_2.png" width="32%" alt="Good correction example 2"/>
-  <img src="docs/assets/example_good_3.png" width="32%" alt="Good correction example 3"/>
+  <img src="docs/assets/example_good_1.png" width="60%" alt="Good correction example 1"/>
+  <img src="docs/assets/example_good_2.png" width="60%" alt="Good correction example 2"/>
+  <img src="docs/assets/example_good_3.png" width="60%" alt="Good correction example 3"/>
 </p>
 
 <p align="center"><em>Examples of successful automatic bounding box corrections - Original (left) vs Corrected (right)</em></p>
@@ -12,9 +12,9 @@ A toolkit for correcting bounding box alignment between thermal and RGB aerial i
 
 ## 🎯 The Problem
 
-When working with synchronized thermal and RGB imagery from drones or aircraft:
-- Bounding boxes annotated on thermal images often don't align correctly when projected onto RGB images
-- This misalignment is caused by camera positioning, lens differences, and projection errors
+When working with synchronized thermal and RGB imagery from drones:
+- Bounding boxes annotated on thermal images often don't align correctly when projected onto RGB images 
+- This misalignment can be caused by camera positioning, lens differences, time synch, and projection errors
 - Manual correction is time-consuming for large datasets
 
 ## ✨ The Solution
