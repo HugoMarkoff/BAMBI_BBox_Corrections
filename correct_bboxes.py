@@ -232,9 +232,7 @@ class AutoCorrectionTool:
         
         for frame_key, samples in frames.items():
             processed += 1
-            if processed % 100 == 0:
-                print(f"  Processed {processed}/{len(frames)} frames | "
-                      f"Corrections: {len(corrections)}")
+            print(f"  [{processed}/{len(frames)}] Processing frame: {frame_key} ({len(samples)} detections)")
             
             # Gather all candidate shifts from all methods and detections
             all_shifts = []
@@ -569,9 +567,9 @@ class AutoCorrectionTool:
         print("\n" + "=" * 70)
         print("CORRECTION SUMMARY")
         print("=" * 70)
-        print(f"Total corrections applied: {len(corrections)}")
-        print(f"  - Multi-detection frames: {self.stats['multi_detection_corrections']}")
-        print(f"  - Single-detection frames: {self.stats['single_detection_corrections']}")
+        print(f"Total bboxes corrected: {len(corrections)}")
+        print(f"  - From multi-detection frames: {self.stats['multi_detection_corrections']} bboxes")
+        print(f"  - From single-detection frames: {self.stats['single_detection_corrections']} bboxes")
         print(f"Frames with consensus: {self.stats['consensus_found']}")
         print(f"Frames without consensus: {self.stats['no_consensus']}")
         

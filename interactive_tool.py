@@ -54,6 +54,39 @@ class InteractiveCorrectionTool:
         
         # Setup UI
         self._setup_ui()
+        
+        # Auto-load sample data on startup
+        self._load_sample_data()
+    
+    def _load_sample_data(self):
+        """Load sample data from default paths (no dialogs)."""
+        # Default paths - edit these to point to your data
+        base_dir = Path(__file__).parent
+        self.thermal_dir = base_dir / "sample_data" / "thermal"
+        self.rgb_dir = base_dir / "sample_data" / "rgb"
+        self.labels_dir = base_dir / "sample_data" / "metadata"
+        
+        if not self.thermal_dir.exists():
+            self.status_var.set("Sample data not found. Use 'Load Data' button.")
+            return
+        
+        try:
+            label_format = detect_label_format(self.labels_dir)
+            self.status_var.set(f"Loading sample data ({label_format} format)...")
+            
+            if label_format == 'yolo':
+                self._load_yolo_samples()
+            else:
+                self._load_metadata_samples()
+            
+            if self.samples:
+                self.current_idx = 0
+                self.root.after(100, self._update_display)  # Delay to let UI render
+                self.status_var.set(f"Loaded {len(self.samples)} samples from sample_data/")
+            else:
+                self.status_var.set("No samples found in sample_data/")
+        except Exception as e:
+            self.status_var.set(f"Error loading sample data: {e}")
     
     def _setup_ui(self):
         """Setup the user interface."""
