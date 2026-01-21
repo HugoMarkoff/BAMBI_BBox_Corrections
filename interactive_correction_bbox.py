@@ -88,6 +88,12 @@ class BBoxCorrectionTool:
         self.load_session()
         
     def load_session(self):
+        """Load previous session data. In demo mode, start fresh."""
+        if self.use_sample_data:
+            # Demo mode: always start fresh
+            print("[DEMO MODE] Starting with fresh session (ignoring previous corrections)")
+            return
+        
         if self.session_file.exists():
             with open(self.session_file, 'r') as f:
                 session = json.load(f)
@@ -1433,19 +1439,25 @@ class CorrectionGUI:
         2. RGB image with original (uncorrected) bboxes
         3. RGB image with corrected bboxes
         """
-        # Group corrections by frame
+        # Group corrections by frame, deduplicate by bbox
         frame_corrections = {}
         for c in self.tool.corrections:
             key = (c['flight_key'], c['frame_id'])
             if key not in frame_corrections:
-                frame_corrections[key] = []
-            frame_corrections[key].append(c)
+                frame_corrections[key] = {}
+            
+            # Use original bbox as unique identifier (tuple of coordinates)
+            orig = c['original_bbox']
+            bbox_key = (orig['x_min'], orig['y_min'], orig['x_max'], orig['y_max'])
+            
+            # Keep only the latest correction for each bbox (overwrite duplicates)
+            frame_corrections[key][bbox_key] = c
         
         print(f"Saving visualizations for {len(frame_corrections)} unique frames...")
         
-        for (flight_key, frame_id), corrections in frame_corrections.items():
-            # Get image paths from first correction
-            first_corr = corrections[0]
+        for (flight_key, frame_id), bbox_corrections in frame_corrections.items():
+            # Convert dict back to list
+            corrections = list(bbox_corrections.values())
             
             # Find matching sample to get image paths
             sample = None
@@ -1516,7 +1528,7 @@ class CorrectionGUI:
             # Save
             output_path = self.tool.viz_output_dir / f"manual_frame_{flight_key}_{frame_id}.png"
             cv2.imwrite(str(output_path), combined)
-            print(f"  Saved: {output_path.name}")
+            print(f"  Saved: {output_path.name} ({len(corrections)} bboxes)")
         
         print(f"Saved {len(frame_corrections)} visualizations to {self.tool.viz_output_dir}")
     
