@@ -16,6 +16,17 @@ Added Shift+Click / Shift+Number key feature:
   the determined shift (offset_x, offset_y) is applied to ALL bboxes in the frame.
 - This dramatically reduces annotation time from bbox-by-bbox to frame-by-frame.
 - User can skip frames until finding a good representative bbox to validate.
+
+Update 2026-01-21 v2:
+--------------------
+Made apply-to-all the DEFAULT behavior:
+- When you validate a shift on any bbox, it automatically applies to ALL bboxes in that frame.
+- Progress shows total processed (e.g., 55/77 after validating a frame with 55 detections).
+- In demo mode (sample_data), saves visualization images when all samples are processed.
+- Visualizations saved to output/visualizations/manual_frame_XXXX.png showing:
+  * Thermal image with bboxes
+  * RGB image with original (uncorrected) bboxes
+  * RGB image with corrected bboxes
 """
 
 import cv2
@@ -32,6 +43,7 @@ from datetime import datetime
 class BBoxCorrectionTool:
     def __init__(self, data_dir, use_sample_data=False):
         self.data_dir = Path(data_dir)
+        self.use_sample_data = use_sample_data  # Track demo mode
         
         if use_sample_data:
             # Use sample_data subdirectory structure
@@ -49,10 +61,17 @@ class BBoxCorrectionTool:
         self.output_dir = self.data_dir / "corrected_metadata"
         self.output_dir.mkdir(exist_ok=True)
         
+        # Visualization output directory
+        self.viz_output_dir = self.data_dir / "output" / "visualizations"
+        self.viz_output_dir.mkdir(parents=True, exist_ok=True)
+        
         # Store validated corrections
         self.corrections = []
         self.good_params = []
         self.bad_cases = []
+        
+        # Track processed sample indices for accurate progress
+        self.processed_indices = set()
         
         # Matching methods
         self.matching_methods = [
@@ -648,9 +667,8 @@ class CorrectionGUI:
                                         highlightthickness=2, highlightbackground='#4CAF50')
             rgb_crop_canvas.pack(side=tk.LEFT, padx=8)
             
-            # Use This button (acts as Good/Accept) - wider button
-            # Shift+Click applies to all bboxes in frame
-            select_btn = tk.Button(row_frame, text=f"✓ Use ({i+1}) [Shift=All]", width=18,
+            # Use This button (acts as Good/Accept) - applies to ALL bboxes in frame by default
+            select_btn = tk.Button(row_frame, text=f"✓ Use ({i+1}) [All]", width=16,
                                    bg='#4CAF50', fg='white', font=('Arial', 10, 'bold'))
             select_btn.bind('<Button-1>', lambda e, idx=i: self._on_select_click(e, idx))
             select_btn.pack(side=tk.LEFT, padx=10)
@@ -726,18 +744,20 @@ class CorrectionGUI:
         self.root.bind('<Left>', lambda e: self.prev_sample())
         self.root.bind('<Right>', lambda e: self.next_sample())
         self.root.bind('<Escape>', lambda e: self.save_and_quit())
-        self.root.bind('1', lambda e: self.use_method(0))
-        self.root.bind('2', lambda e: self.use_method(1))
-        self.root.bind('3', lambda e: self.use_method(2))
-        self.root.bind('4', lambda e: self.use_method(3))
-        self.root.bind('5', lambda e: self.use_method(4))
         
-        # Shift+number: Apply shift to ALL bboxes in frame
-        self.root.bind('!', lambda e: self.use_method_apply_all(0))  # Shift+1
-        self.root.bind('@', lambda e: self.use_method_apply_all(1))  # Shift+2
-        self.root.bind('#', lambda e: self.use_method_apply_all(2))  # Shift+3
-        self.root.bind('$', lambda e: self.use_method_apply_all(3))  # Shift+4
-        self.root.bind('%', lambda e: self.use_method_apply_all(4))  # Shift+5
+        # 1-5: Apply shift to ALL bboxes in frame (default behavior)
+        self.root.bind('1', lambda e: self.use_method_apply_all(0))
+        self.root.bind('2', lambda e: self.use_method_apply_all(1))
+        self.root.bind('3', lambda e: self.use_method_apply_all(2))
+        self.root.bind('4', lambda e: self.use_method_apply_all(3))
+        self.root.bind('5', lambda e: self.use_method_apply_all(4))
+        
+        # Shift+number: Apply to single bbox only (override)
+        self.root.bind('!', lambda e: self.use_method(0))  # Shift+1
+        self.root.bind('@', lambda e: self.use_method(1))  # Shift+2
+        self.root.bind('#', lambda e: self.use_method(2))  # Shift+3
+        self.root.bind('$', lambda e: self.use_method(3))  # Shift+4
+        self.root.bind('%', lambda e: self.use_method(4))  # Shift+5
         
     def cv2_to_tk(self, img, max_w=200, max_h=200):
         if img is None or img.size == 0:
@@ -786,11 +806,11 @@ class CorrectionGUI:
         return img
     
     def _on_select_click(self, event, idx):
-        """Handle click on select button - detect Shift for apply-to-all"""
-        if event.state & 0x1:  # Shift key is pressed
-            self.use_method_apply_all(idx)
-        else:
+        """Handle click on select button - default applies to all, Shift for single bbox only"""
+        if event.state & 0x1:  # Shift key is pressed - single bbox only
             self.use_method(idx)
+        else:
+            self.use_method_apply_all(idx)  # Default: apply to all
     
     def select_method(self, idx):
         """Select a specific method as the best one (just preview)"""
@@ -879,8 +899,12 @@ class CorrectionGUI:
             self.tool.corrections.append(correction)
             applied_count += 1
             skipped_indices.add(sample_idx)
+            
+            # Track as processed
+            self.tool.processed_indices.add(sample_idx)
         
         print(f"[APPLY TO ALL] Applied correction to {applied_count} bboxes total")
+        print(f"[PROGRESS] {len(self.tool.processed_indices)}/{len(self.tool.samples)} samples processed")
         
         # Mark these samples as processed by skipping them
         # We'll jump past all samples in this frame
@@ -921,21 +945,29 @@ class CorrectionGUI:
             'thermal_brightness': thermal_mean,
             'rgb_brightness': rgb_mean
         })
+        
+        # Track this sample as processed
+        self.tool.processed_indices.add(self.tool.current_idx)
     
     def _skip_frame_samples(self, skipped_indices):
         """
         Skip all samples that were processed via apply-to-all.
-        Find the next sample that wasn't in the skipped set.
+        Find the next unprocessed sample.
         """
+        # Find next unprocessed sample
         self.tool.current_idx += 1
         
         while self.tool.current_idx < len(self.tool.samples):
-            if self.tool.current_idx in skipped_indices:
+            if self.tool.current_idx in self.tool.processed_indices:
                 self.tool.current_idx += 1
             else:
                 break
         
-        if self.tool.current_idx >= len(self.tool.samples):
+        # Check if all samples are processed
+        if len(self.tool.processed_indices) >= len(self.tool.samples):
+            self.show_completion()
+        elif self.tool.current_idx >= len(self.tool.samples):
+            # Reached end but maybe there are unprocessed samples earlier (shouldn't happen normally)
             self.show_completion()
         else:
             self.load_current_sample()
@@ -1161,8 +1193,10 @@ class CorrectionGUI:
                      f"Positions tested: {positions_tested:,}"
             )
         
-        # Update progress
-        self.progress_label.config(text=f"Progress: {self.tool.current_idx + 1}/{len(self.tool.samples)}")
+        # Update progress - show processed count
+        processed = len(self.tool.processed_indices)
+        total = len(self.tool.samples)
+        self.progress_label.config(text=f"Progress: {processed}/{total}")
         self.stats_label.config(text=f"Good: {len(self.tool.corrections)} | Bad: {len(self.tool.bad_cases)}")
     
     def load_current_sample(self):
@@ -1223,6 +1257,9 @@ class CorrectionGUI:
             'thermal_brightness': thermal_mean,
             'rgb_brightness': rgb_mean
         })
+        
+        # Track as processed
+        self.tool.processed_indices.add(self.tool.current_idx)
         
         # Show quick pattern update
         if len(self.tool.corrections) >= 3:
@@ -1372,13 +1409,116 @@ class CorrectionGUI:
             self.load_current_sample()
     
     def show_completion(self):
-        msg = f"Validation Complete!\n\nGood: {len(self.tool.corrections)}\nBad: {len(self.tool.bad_cases)}"
+        processed = len(self.tool.processed_indices)
+        total = len(self.tool.samples)
+        msg = f"Validation Complete!\n\nProcessed: {processed}/{total}\nGood: {len(self.tool.corrections)}\nBad: {len(self.tool.bad_cases)}"
+        
+        # In demo mode (sample_data), save visualizations
+        if self.tool.use_sample_data and len(self.tool.corrections) > 0:
+            print("\n[DEMO MODE] Saving visualizations...")
+            self._save_demo_visualizations()
+            msg += f"\n\nVisualizations saved to:\n{self.tool.viz_output_dir}"
+        
         popup = tk.Toplevel(self.root)
         popup.title("Complete")
-        popup.geometry("300x150")
+        popup.geometry("400x200")
         popup.configure(bg='#2b2b2b')
         tk.Label(popup, text=msg, bg='#2b2b2b', fg='white', font=('Arial', 12)).pack(pady=20)
         tk.Button(popup, text="OK", command=popup.destroy).pack()
+    
+    def _save_demo_visualizations(self):
+        """
+        Save visualization images for demo mode showing:
+        1. Thermal image with all bboxes
+        2. RGB image with original (uncorrected) bboxes
+        3. RGB image with corrected bboxes
+        """
+        # Group corrections by frame
+        frame_corrections = {}
+        for c in self.tool.corrections:
+            key = (c['flight_key'], c['frame_id'])
+            if key not in frame_corrections:
+                frame_corrections[key] = []
+            frame_corrections[key].append(c)
+        
+        print(f"Saving visualizations for {len(frame_corrections)} unique frames...")
+        
+        for (flight_key, frame_id), corrections in frame_corrections.items():
+            # Get image paths from first correction
+            first_corr = corrections[0]
+            
+            # Find matching sample to get image paths
+            sample = None
+            for s in self.tool.samples:
+                if s['flight_key'] == flight_key and s['frame_id'] == frame_id:
+                    sample = s
+                    break
+            
+            if not sample:
+                continue
+            
+            # Load images
+            thermal_img = cv2.imread(sample['thermal_path'])
+            rgb_img = cv2.imread(sample['rgb_path'])
+            
+            if thermal_img is None or rgb_img is None:
+                continue
+            
+            # Create copies for drawing
+            thermal_viz = thermal_img.copy()
+            rgb_original_viz = rgb_img.copy()
+            rgb_corrected_viz = rgb_img.copy()
+            
+            # Draw all bboxes
+            for c in corrections:
+                orig_bbox = c['original_bbox']
+                corr_bbox = c['corrected_bbox']
+                
+                # Thermal: draw bbox in green
+                cv2.rectangle(thermal_viz,
+                             (orig_bbox['x_min'], orig_bbox['y_min']),
+                             (orig_bbox['x_max'], orig_bbox['y_max']),
+                             (0, 255, 0), 2)
+                
+                # RGB original: draw original bbox in red
+                cv2.rectangle(rgb_original_viz,
+                             (orig_bbox['x_min'], orig_bbox['y_min']),
+                             (orig_bbox['x_max'], orig_bbox['y_max']),
+                             (0, 0, 255), 2)
+                
+                # RGB corrected: draw corrected bbox in green
+                cv2.rectangle(rgb_corrected_viz,
+                             (corr_bbox['x_min'], corr_bbox['y_min']),
+                             (corr_bbox['x_max'], corr_bbox['y_max']),
+                             (0, 255, 0), 2)
+            
+            # Add labels
+            font = cv2.FONT_HERSHEY_SIMPLEX
+            cv2.putText(thermal_viz, 'THERMAL', (10, 30), font, 1, (0, 255, 0), 2)
+            cv2.putText(rgb_original_viz, 'RGB - ORIGINAL (uncorrected)', (10, 30), font, 0.8, (0, 0, 255), 2)
+            cv2.putText(rgb_corrected_viz, 'RGB - CORRECTED', (10, 30), font, 1, (0, 255, 0), 2)
+            
+            # Combine into a single visualization (horizontal stack)
+            # Resize to same height if needed
+            h = max(thermal_viz.shape[0], rgb_original_viz.shape[0])
+            
+            def resize_to_height(img, target_h):
+                scale = target_h / img.shape[0]
+                return cv2.resize(img, (int(img.shape[1] * scale), target_h))
+            
+            thermal_viz = resize_to_height(thermal_viz, h)
+            rgb_original_viz = resize_to_height(rgb_original_viz, h)
+            rgb_corrected_viz = resize_to_height(rgb_corrected_viz, h)
+            
+            # Stack horizontally
+            combined = np.hstack([thermal_viz, rgb_original_viz, rgb_corrected_viz])
+            
+            # Save
+            output_path = self.tool.viz_output_dir / f"manual_frame_{flight_key}_{frame_id}.png"
+            cv2.imwrite(str(output_path), combined)
+            print(f"  Saved: {output_path.name}")
+        
+        print(f"Saved {len(frame_corrections)} visualizations to {self.tool.viz_output_dir}")
     
     def auto_correct_all(self):
         if not self.tool.good_params:
@@ -1587,14 +1727,17 @@ def main():
     print(f"\nLoaded {len(tool.samples)} samples for verification")
     
     print("\nKeyboard shortcuts:")
-    print("  1-5       - Accept with method (single bbox)")
-    print("  Shift+1-5 - Apply shift to ALL bboxes in frame")
+    print("  1-5       - Accept with method (applies to ALL bboxes in frame)")
+    print("  Shift+1-5 - Accept single bbox only (override)")
     print("  R         - Reject")
     print("  S         - Skip")
     print("  ←/→       - Navigate")
     print("  ESC       - Save & Quit")
-    print("\nTip: Use Shift+click or Shift+number to apply a validated")
-    print("     shift from one bbox to all bboxes in the frame.")
+    print("\nNote: Selecting any method automatically applies the shift")
+    print("      to all bboxes in the frame. Progress updates accordingly.")
+    
+    if USE_SAMPLE_DATA:
+        print("\n[DEMO MODE] Visualizations will be saved on completion.")
     
     gui = CorrectionGUI(tool)
     gui.run()
