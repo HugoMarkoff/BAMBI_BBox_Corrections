@@ -260,18 +260,34 @@ class AutoCorrectionTool:
                     }
                     
                     # Collect shifts from all methods
-                    for method_name, method_data in data['methods'].items():
-                        if method_data.get('shift'):
-                            shift = method_data['shift']
-                            confidence = method_data.get('confidence', 0)
+                    # Handle both old dict format and new list format
+                    results = data.get('results', [])
+                    if isinstance(results, list):
+                        # New format: list of result dicts
+                        for method_result in results:
+                            confidence = method_result.get('confidence', 0)
                             if confidence > 0.3:  # Minimum confidence threshold
                                 all_shifts.append({
-                                    'dx': shift['dx'],
-                                    'dy': shift['dy'],
-                                    'method': method_name,
+                                    'offset_x': method_result.get('offset_x', 0),
+                                    'offset_y': method_result.get('offset_y', 0),
+                                    'method': method_result.get('method', 'unknown'),
                                     'det_idx': det_idx,
                                     'confidence': confidence
                                 })
+                    else:
+                        # Old format: dict with method names as keys
+                        for method_name, method_data in results.items():
+                            if method_data.get('shift'):
+                                shift = method_data['shift']
+                                confidence = method_data.get('confidence', 0)
+                                if confidence > 0.3:
+                                    all_shifts.append({
+                                        'offset_x': shift['dx'],
+                                        'offset_y': shift['dy'],
+                                        'method': method_name,
+                                        'det_idx': det_idx,
+                                        'confidence': confidence
+                                    })
                 except Exception as e:
                     continue
             
@@ -288,16 +304,15 @@ class AutoCorrectionTool:
             best_cluster = shift_clusters[0]
             
             # Count unique detections and methods in cluster
-            cluster_dets = set(s['det_idx'] for s in best_cluster['shifts'])
-            cluster_methods = set(s['method'] for s in best_cluster['shifts'])
+            cluster_dets = set(s['det_idx'] for s in best_cluster['members'])
+            cluster_methods = set(s['method'] for s in best_cluster['members'])
             
-            # Compute consensus score
-            score = compute_consensus_score(
-                len(cluster_methods), len(self.engine.matching_methods),
-                len(cluster_dets), len(samples)
-            )
+            # Compute consensus score (simple coverage-based)
+            method_coverage = len(cluster_methods) / len(self.engine.matching_methods)
+            detection_coverage = len(cluster_dets) / len(samples)
+            score = (method_coverage + detection_coverage) / 2
             
-            coverage = len(cluster_dets) / len(samples)
+            coverage = detection_coverage
             
             # Check if consensus meets requirements
             if score >= self.min_consensus_score and coverage >= self.min_detection_coverage:
