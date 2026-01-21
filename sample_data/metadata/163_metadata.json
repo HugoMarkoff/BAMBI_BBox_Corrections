@@ -1,0 +1,190 @@
+{
+  "flight_key": "163",
+  "split": "test",
+  "generated_at": "2026-01-17T12:06:02.294998",
+  "frame_count": 1,
+  "flight_info": {
+    "sharepoint_link": "https://fhooe.sharepoint.com/teams/BAMBI-dev/Freigegebene%20Dokumente/Processed/BW/2024_03_22_Ktn_StoaniGatter_Bichl/1581F5FJB22A700A0DV7_M3TE/015_GATSTPBICHLWESTh45d202024",
+    "key": "163"
+  },
+  "frames": {
+    "6395": {
+      "frame_idx": 6395,
+      "thermal_image": "163_6395.jpg",
+      "rgb_image": "163_6395.jpg",
+      "label_file": "163_6395.txt",
+      "annotations": [
+        {
+          "wikidata_id": "Q1219579",
+          "species": "Rotwild",
+          "gender": 0,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 2885,
+          "bbox": {
+            "x_min": 449,
+            "y_min": 468,
+            "x_max": 499,
+            "y_max": 500,
+            "width": 50,
+            "height": 32
+          }
+        },
+        {
+          "wikidata_id": "Q1219579",
+          "species": "Rotwild",
+          "gender": 0,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 2886,
+          "bbox": {
+            "x_min": 459,
+            "y_min": 529,
+            "x_max": 498,
+            "y_max": 581,
+            "width": 39,
+            "height": 52
+          }
+        },
+        {
+          "wikidata_id": "Q1219579",
+          "species": "Rotwild",
+          "gender": 0,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 2887,
+          "bbox": {
+            "x_min": 438,
+            "y_min": 555,
+            "x_max": 483,
+            "y_max": 600,
+            "width": 45,
+            "height": 45
+          }
+        },
+        {
+          "wikidata_id": "Q1219579",
+          "species": "Rotwild",
+          "gender": 0,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 2888,
+          "bbox": {
+            "x_min": 415,
+            "y_min": 610,
+            "x_max": 467,
+            "y_max": 646,
+            "width": 52,
+            "height": 36
+          }
+        },
+        {
+          "wikidata_id": "Q1219579",
+          "species": "Rotwild",
+          "gender": 0,
+          "age": 0,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 2889,
+          "bbox": {
+            "x_min": 396,
+            "y_min": 552,
+            "x_max": 433,
+            "y_max": 598,
+            "width": 37,
+            "height": 46
+          }
+        },
+        {
+          "wikidata_id": "Q1219579",
+          "species": "Rotwild",
+          "gender": 0,
+          "age": 0,
+          "visibility": 1,
+          "is_propagated": false,
+          "label_id": 2890,
+          "bbox": {
+            "x_min": 294,
+            "y_min": 598,
+            "x_max": 330,
+            "y_max": 635,
+            "width": 36,
+            "height": 37
+          }
+        },
+        {
+          "wikidata_id": "Q1219579",
+          "species": "Rotwild",
+          "gender": 0,
+          "age": 0,
+          "visibility": 1,
+          "is_propagated": false,
+          "label_id": 2891,
+          "bbox": {
+            "x_min": 395,
+            "y_min": 632,
+            "x_max": 436,
+            "y_max": 672,
+            "width": 41,
+            "height": 40
+          }
+        },
+        {
+          "wikidata_id": "Q1219579",
+          "species": "Rotwild",
+          "gender": 0,
+          "age": 0,
+          "visibility": 1,
+          "is_propagated": false,
+          "label_id": 2892,
+          "bbox": {
+            "x_min": 367,
+            "y_min": 678,
+            "x_max": 408,
+            "y_max": 707,
+            "width": 41,
+            "height": 29
+          }
+        },
+        {
+          "wikidata_id": "Q1219579",
+          "species": "Rotwild",
+          "gender": 0,
+          "age": 0,
+          "visibility": 1,
+          "is_propagated": false,
+          "label_id": 2893,
+          "bbox": {
+            "x_min": 371,
+            "y_min": 702,
+            "x_max": 415,
+            "y_max": 738,
+            "width": 44,
+            "height": 36
+          }
+        },
+        {
+          "wikidata_id": "Q1219579",
+          "species": "Rotwild",
+          "gender": 0,
+          "age": 2,
+          "visibility": 1,
+          "is_propagated": false,
+          "label_id": 2894,
+          "bbox": {
+            "x_min": 159,
+            "y_min": 445,
+            "x_max": 212,
+            "y_max": 489,
+            "width": 53,
+            "height": 44
+          }
+        }
+      ]
+    }
+  }
+}

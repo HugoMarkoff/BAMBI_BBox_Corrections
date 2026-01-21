@@ -1,0 +1,1023 @@
+{
+  "flight_key": "17",
+  "split": "train",
+  "generated_at": "2026-01-18T17:52:46.033418",
+  "frame_count": 1,
+  "flight_info": {
+    "sharepoint_link": "https://fhooe.sharepoint.com/teams/BAMBI-dev/Freigegebene%20Dokumente/Processed/BW/2023_01_19_Ktn_Mageregg/1581F5FJB22A700A0DV7_M3TE/014_MagareggNord/",
+    "key": "17"
+  },
+  "frames": {
+    "19345": {
+      "frame_idx": 19345,
+      "thermal_image": "17_19345.jpg",
+      "rgb_image": "17_19345.jpg",
+      "label_file": "17_19345.txt",
+      "annotations": [
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 452,
+          "bbox": {
+            "x_min": 882,
+            "y_min": 665,
+            "x_max": 907,
+            "y_max": 695,
+            "width": 25,
+            "height": 30
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 456,
+          "bbox": {
+            "x_min": 752,
+            "y_min": 543,
+            "x_max": 790,
+            "y_max": 581,
+            "width": 38,
+            "height": 38
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 464,
+          "bbox": {
+            "x_min": 666,
+            "y_min": 469,
+            "x_max": 698,
+            "y_max": 500,
+            "width": 32,
+            "height": 31
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 487,
+          "bbox": {
+            "x_min": 590,
+            "y_min": 396,
+            "x_max": 618,
+            "y_max": 448,
+            "width": 28,
+            "height": 52
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 488,
+          "bbox": {
+            "x_min": 637,
+            "y_min": 403,
+            "x_max": 672,
+            "y_max": 436,
+            "width": 35,
+            "height": 33
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 489,
+          "bbox": {
+            "x_min": 673,
+            "y_min": 396,
+            "x_max": 705,
+            "y_max": 424,
+            "width": 32,
+            "height": 28
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 490,
+          "bbox": {
+            "x_min": 679,
+            "y_min": 421,
+            "x_max": 725,
+            "y_max": 444,
+            "width": 46,
+            "height": 23
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 491,
+          "bbox": {
+            "x_min": 722,
+            "y_min": 390,
+            "x_max": 749,
+            "y_max": 428,
+            "width": 27,
+            "height": 38
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 492,
+          "bbox": {
+            "x_min": 743,
+            "y_min": 405,
+            "x_max": 785,
+            "y_max": 436,
+            "width": 42,
+            "height": 31
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 521,
+          "bbox": {
+            "x_min": 535,
+            "y_min": 349,
+            "x_max": 567,
+            "y_max": 395,
+            "width": 32,
+            "height": 46
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 522,
+          "bbox": {
+            "x_min": 475,
+            "y_min": 369,
+            "x_max": 504,
+            "y_max": 413,
+            "width": 29,
+            "height": 44
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 523,
+          "bbox": {
+            "x_min": 413,
+            "y_min": 365,
+            "x_max": 450,
+            "y_max": 405,
+            "width": 37,
+            "height": 40
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 0,
+          "age": 1,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 532,
+          "bbox": {
+            "x_min": 634,
+            "y_min": 379,
+            "x_max": 671,
+            "y_max": 412,
+            "width": 37,
+            "height": 33
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 0,
+          "age": 1,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 533,
+          "bbox": {
+            "x_min": 715,
+            "y_min": 586,
+            "x_max": 748,
+            "y_max": 615,
+            "width": 33,
+            "height": 29
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 0,
+          "age": 1,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 534,
+          "bbox": {
+            "x_min": 911,
+            "y_min": 665,
+            "x_max": 940,
+            "y_max": 697,
+            "width": 29,
+            "height": 32
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 0,
+          "age": 1,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 535,
+          "bbox": {
+            "x_min": 581,
+            "y_min": 530,
+            "x_max": 619,
+            "y_max": 573,
+            "width": 38,
+            "height": 43
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 0,
+          "age": 1,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 536,
+          "bbox": {
+            "x_min": 531,
+            "y_min": 440,
+            "x_max": 571,
+            "y_max": 479,
+            "width": 40,
+            "height": 39
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 537,
+          "bbox": {
+            "x_min": 894,
+            "y_min": 304,
+            "x_max": 935,
+            "y_max": 339,
+            "width": 41,
+            "height": 35
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 0,
+          "age": 1,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 538,
+          "bbox": {
+            "x_min": 729,
+            "y_min": 314,
+            "x_max": 765,
+            "y_max": 343,
+            "width": 36,
+            "height": 29
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 539,
+          "bbox": {
+            "x_min": 704,
+            "y_min": 315,
+            "x_max": 737,
+            "y_max": 356,
+            "width": 33,
+            "height": 41
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 540,
+          "bbox": {
+            "x_min": 697,
+            "y_min": 552,
+            "x_max": 732,
+            "y_max": 579,
+            "width": 35,
+            "height": 27
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 0,
+          "age": 1,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 541,
+          "bbox": {
+            "x_min": 665,
+            "y_min": 441,
+            "x_max": 704,
+            "y_max": 464,
+            "width": 39,
+            "height": 23
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 542,
+          "bbox": {
+            "x_min": 916,
+            "y_min": 262,
+            "x_max": 949,
+            "y_max": 295,
+            "width": 33,
+            "height": 33
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 0,
+          "age": 1,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 543,
+          "bbox": {
+            "x_min": 605,
+            "y_min": 283,
+            "x_max": 638,
+            "y_max": 311,
+            "width": 33,
+            "height": 28
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 2,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 544,
+          "bbox": {
+            "x_min": 528,
+            "y_min": 287,
+            "x_max": 565,
+            "y_max": 322,
+            "width": 37,
+            "height": 35
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 0,
+          "age": 1,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 548,
+          "bbox": {
+            "x_min": 569,
+            "y_min": 258,
+            "x_max": 594,
+            "y_max": 292,
+            "width": 25,
+            "height": 34
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 549,
+          "bbox": {
+            "x_min": 608,
+            "y_min": 265,
+            "x_max": 648,
+            "y_max": 286,
+            "width": 40,
+            "height": 21
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 551,
+          "bbox": {
+            "x_min": 471,
+            "y_min": 273,
+            "x_max": 511,
+            "y_max": 307,
+            "width": 40,
+            "height": 34
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 0,
+          "age": 1,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 552,
+          "bbox": {
+            "x_min": 542,
+            "y_min": 246,
+            "x_max": 574,
+            "y_max": 273,
+            "width": 32,
+            "height": 27
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 553,
+          "bbox": {
+            "x_min": 670,
+            "y_min": 227,
+            "x_max": 708,
+            "y_max": 256,
+            "width": 38,
+            "height": 29
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 554,
+          "bbox": {
+            "x_min": 573,
+            "y_min": 232,
+            "x_max": 603,
+            "y_max": 260,
+            "width": 30,
+            "height": 28
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 557,
+          "bbox": {
+            "x_min": 654,
+            "y_min": 229,
+            "x_max": 680,
+            "y_max": 251,
+            "width": 26,
+            "height": 22
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 558,
+          "bbox": {
+            "x_min": 629,
+            "y_min": 234,
+            "x_max": 671,
+            "y_max": 255,
+            "width": 42,
+            "height": 21
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 559,
+          "bbox": {
+            "x_min": 450,
+            "y_min": 209,
+            "x_max": 488,
+            "y_max": 244,
+            "width": 38,
+            "height": 35
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 560,
+          "bbox": {
+            "x_min": 561,
+            "y_min": 212,
+            "x_max": 589,
+            "y_max": 242,
+            "width": 28,
+            "height": 30
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 561,
+          "bbox": {
+            "x_min": 605,
+            "y_min": 208,
+            "x_max": 644,
+            "y_max": 238,
+            "width": 39,
+            "height": 30
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 562,
+          "bbox": {
+            "x_min": 691,
+            "y_min": 205,
+            "x_max": 728,
+            "y_max": 238,
+            "width": 37,
+            "height": 33
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 564,
+          "bbox": {
+            "x_min": 953,
+            "y_min": 243,
+            "x_max": 984,
+            "y_max": 284,
+            "width": 31,
+            "height": 41
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 565,
+          "bbox": {
+            "x_min": 646,
+            "y_min": 183,
+            "x_max": 669,
+            "y_max": 219,
+            "width": 23,
+            "height": 36
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 566,
+          "bbox": {
+            "x_min": 685,
+            "y_min": 165,
+            "x_max": 729,
+            "y_max": 194,
+            "width": 44,
+            "height": 29
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 567,
+          "bbox": {
+            "x_min": 601,
+            "y_min": 166,
+            "x_max": 631,
+            "y_max": 197,
+            "width": 30,
+            "height": 31
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 568,
+          "bbox": {
+            "x_min": 573,
+            "y_min": 165,
+            "x_max": 596,
+            "y_max": 196,
+            "width": 23,
+            "height": 31
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 569,
+          "bbox": {
+            "x_min": 550,
+            "y_min": 165,
+            "x_max": 573,
+            "y_max": 199,
+            "width": 23,
+            "height": 34
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 570,
+          "bbox": {
+            "x_min": 735,
+            "y_min": 164,
+            "x_max": 771,
+            "y_max": 194,
+            "width": 36,
+            "height": 30
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 0,
+          "age": 1,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 571,
+          "bbox": {
+            "x_min": 556,
+            "y_min": 320,
+            "x_max": 586,
+            "y_max": 360,
+            "width": 30,
+            "height": 40
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 572,
+          "bbox": {
+            "x_min": 662,
+            "y_min": 150,
+            "x_max": 692,
+            "y_max": 183,
+            "width": 30,
+            "height": 33
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 573,
+          "bbox": {
+            "x_min": 728,
+            "y_min": 135,
+            "x_max": 759,
+            "y_max": 165,
+            "width": 31,
+            "height": 30
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 0,
+          "age": 1,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 574,
+          "bbox": {
+            "x_min": 701,
+            "y_min": 134,
+            "x_max": 726,
+            "y_max": 175,
+            "width": 25,
+            "height": 41
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 0,
+          "age": 1,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 575,
+          "bbox": {
+            "x_min": 621,
+            "y_min": 143,
+            "x_max": 650,
+            "y_max": 173,
+            "width": 29,
+            "height": 30
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 576,
+          "bbox": {
+            "x_min": 575,
+            "y_min": 143,
+            "x_max": 596,
+            "y_max": 174,
+            "width": 21,
+            "height": 31
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 577,
+          "bbox": {
+            "x_min": 538,
+            "y_min": 141,
+            "x_max": 571,
+            "y_max": 173,
+            "width": 33,
+            "height": 32
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 578,
+          "bbox": {
+            "x_min": 599,
+            "y_min": 117,
+            "x_max": 623,
+            "y_max": 147,
+            "width": 24,
+            "height": 30
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 579,
+          "bbox": {
+            "x_min": 640,
+            "y_min": 114,
+            "x_max": 666,
+            "y_max": 148,
+            "width": 26,
+            "height": 34
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 580,
+          "bbox": {
+            "x_min": 487,
+            "y_min": 266,
+            "x_max": 522,
+            "y_max": 295,
+            "width": 35,
+            "height": 29
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 581,
+          "bbox": {
+            "x_min": 674,
+            "y_min": 105,
+            "x_max": 705,
+            "y_max": 135,
+            "width": 31,
+            "height": 30
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 582,
+          "bbox": {
+            "x_min": 841,
+            "y_min": 208,
+            "x_max": 872,
+            "y_max": 249,
+            "width": 31,
+            "height": 41
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 0,
+          "age": 1,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 583,
+          "bbox": {
+            "x_min": 678,
+            "y_min": 259,
+            "x_max": 695,
+            "y_max": 292,
+            "width": 17,
+            "height": 33
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 584,
+          "bbox": {
+            "x_min": 724,
+            "y_min": 650,
+            "x_max": 765,
+            "y_max": 691,
+            "width": 41,
+            "height": 41
+          }
+        },
+        {
+          "wikidata_id": "Q20908334",
+          "species": "Damhirsch",
+          "gender": 1,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 585,
+          "bbox": {
+            "x_min": 841,
+            "y_min": 645,
+            "x_max": 873,
+            "y_max": 684,
+            "width": 32,
+            "height": 39
+          }
+        }
+      ]
+    }
+  }
+}

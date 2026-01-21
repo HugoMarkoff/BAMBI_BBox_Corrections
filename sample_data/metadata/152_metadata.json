@@ -1,0 +1,173 @@
+{
+  "flight_key": "152",
+  "split": "test",
+  "generated_at": "2026-01-17T11:28:40.367893",
+  "frame_count": 1,
+  "flight_info": {
+    "sharepoint_link": "https://fhooe.sharepoint.com/teams/BAMBI-dev/Freigegebene%20Dokumente/Processed/BW/2023_12_14_Ktn_StoaniGatter_Bichl/1581F5FJB22A700A0DV7_M3TE/060_GATSTPBICHLOSTh50d202024",
+    "key": "152"
+  },
+  "frames": {
+    "14703": {
+      "frame_idx": 14703,
+      "thermal_image": "152_14703.jpg",
+      "rgb_image": "152_14703.jpg",
+      "label_file": "152_14703.txt",
+      "annotations": [
+        {
+          "wikidata_id": "Q1219579",
+          "species": "Rotwild",
+          "gender": 0,
+          "age": 0,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 2606,
+          "bbox": {
+            "x_min": 37,
+            "y_min": 331,
+            "x_max": 74,
+            "y_max": 379,
+            "width": 37,
+            "height": 48
+          }
+        },
+        {
+          "wikidata_id": "Q1219579",
+          "species": "Rotwild",
+          "gender": 0,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 2607,
+          "bbox": {
+            "x_min": 280,
+            "y_min": 437,
+            "x_max": 318,
+            "y_max": 491,
+            "width": 38,
+            "height": 54
+          }
+        },
+        {
+          "wikidata_id": "Q1219579",
+          "species": "Rotwild",
+          "gender": 0,
+          "age": 0,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 2608,
+          "bbox": {
+            "x_min": 420,
+            "y_min": 404,
+            "x_max": 472,
+            "y_max": 451,
+            "width": 52,
+            "height": 47
+          }
+        },
+        {
+          "wikidata_id": "Q1219579",
+          "species": "Rotwild",
+          "gender": 0,
+          "age": 0,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 2609,
+          "bbox": {
+            "x_min": 438,
+            "y_min": 481,
+            "x_max": 500,
+            "y_max": 531,
+            "width": 62,
+            "height": 50
+          }
+        },
+        {
+          "wikidata_id": "Q1219579",
+          "species": "Rotwild",
+          "gender": 0,
+          "age": 0,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 2610,
+          "bbox": {
+            "x_min": 607,
+            "y_min": 624,
+            "x_max": 661,
+            "y_max": 683,
+            "width": 54,
+            "height": 59
+          }
+        },
+        {
+          "wikidata_id": "Q1219579",
+          "species": "Rotwild",
+          "gender": 0,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 2611,
+          "bbox": {
+            "x_min": 788,
+            "y_min": 524,
+            "x_max": 847,
+            "y_max": 598,
+            "width": 59,
+            "height": 74
+          }
+        },
+        {
+          "wikidata_id": "Q1219579",
+          "species": "Rotwild",
+          "gender": 0,
+          "age": 0,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 2612,
+          "bbox": {
+            "x_min": 98,
+            "y_min": 696,
+            "x_max": 140,
+            "y_max": 751,
+            "width": 42,
+            "height": 55
+          }
+        },
+        {
+          "wikidata_id": "Q1219579",
+          "species": "Rotwild",
+          "gender": 0,
+          "age": 0,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 2613,
+          "bbox": {
+            "x_min": 866,
+            "y_min": 85,
+            "x_max": 929,
+            "y_max": 133,
+            "width": 63,
+            "height": 48
+          }
+        },
+        {
+          "wikidata_id": "Q1219579",
+          "species": "Rotwild",
+          "gender": 0,
+          "age": 0,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 2614,
+          "bbox": {
+            "x_min": 943,
+            "y_min": 157,
+            "x_max": 1014,
+            "y_max": 212,
+            "width": 71,
+            "height": 55
+          }
+        }
+      ]
+    }
+  }
+}

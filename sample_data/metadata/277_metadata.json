@@ -1,0 +1,122 @@
+{
+  "flight_key": "277",
+  "split": "test",
+  "generated_at": "2026-01-17T12:39:26.801560",
+  "frame_count": 1,
+  "flight_info": {
+    "sharepoint_link": "https://fhooe.sharepoint.com/teams/BAMBI-dev/Freigegebene%20Dokumente/Processed/ASP/2024_08_22_OOe_StPankraz_ASP/FFFE_M30T/005_vollASPStPankrazBankerl",
+    "key": "277"
+  },
+  "frames": {
+    "6760": {
+      "frame_idx": 6760,
+      "thermal_image": "277_6760.jpg",
+      "rgb_image": "277_6760.jpg",
+      "label_file": "277_6760.txt",
+      "annotations": [
+        {
+          "wikidata_id": "Q58697",
+          "species": "Schwarzwild",
+          "gender": 0,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 4370,
+          "bbox": {
+            "x_min": 1013,
+            "y_min": 463,
+            "x_max": 1024,
+            "y_max": 487,
+            "width": 11,
+            "height": 24
+          }
+        },
+        {
+          "wikidata_id": "Q58697",
+          "species": "Schwarzwild",
+          "gender": 0,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 4371,
+          "bbox": {
+            "x_min": 978,
+            "y_min": 274,
+            "x_max": 1017,
+            "y_max": 297,
+            "width": 39,
+            "height": 23
+          }
+        },
+        {
+          "wikidata_id": "Q58697",
+          "species": "Schwarzwild",
+          "gender": 0,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 4372,
+          "bbox": {
+            "x_min": 881,
+            "y_min": 389,
+            "x_max": 916,
+            "y_max": 411,
+            "width": 35,
+            "height": 22
+          }
+        },
+        {
+          "wikidata_id": "Q58697",
+          "species": "Schwarzwild",
+          "gender": 0,
+          "age": 2,
+          "visibility": 0,
+          "is_propagated": false,
+          "label_id": 4373,
+          "bbox": {
+            "x_min": 744,
+            "y_min": 339,
+            "x_max": 779,
+            "y_max": 362,
+            "width": 35,
+            "height": 23
+          }
+        },
+        {
+          "wikidata_id": "Q58697",
+          "species": "Schwarzwild",
+          "gender": 0,
+          "age": 2,
+          "visibility": 1,
+          "is_propagated": false,
+          "label_id": 4374,
+          "bbox": {
+            "x_min": 710,
+            "y_min": 283,
+            "x_max": 739,
+            "y_max": 306,
+            "width": 29,
+            "height": 23
+          }
+        },
+        {
+          "wikidata_id": "Q58697",
+          "species": "Schwarzwild",
+          "gender": 0,
+          "age": 2,
+          "visibility": 1,
+          "is_propagated": false,
+          "label_id": 4376,
+          "bbox": {
+            "x_min": 425,
+            "y_min": 786,
+            "x_max": 464,
+            "y_max": 811,
+            "width": 39,
+            "height": 25
+          }
+        }
+      ]
+    }
+  }
+}
