@@ -67,4 +67,11 @@ Thumbs.db
 
 # Local testing outputs
 test_output/
+test_output_corrections/
+test_output_metadata/
+test_bambi/
 *.json.bak
+
+# Development/alternative scripts (not for main repo)
+bbox_correction_tool_v2.py
+correct_bboxes.py

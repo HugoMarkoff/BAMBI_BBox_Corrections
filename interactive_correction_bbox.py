@@ -8,6 +8,14 @@ Shows:
 2. RGB search region with different processing methods
 3. Match results for each method
 4. Human validation interface
+
+Update 2026-01-21:
+-----------------
+Added Shift+Click / Shift+Number key feature:
+- When user validates a shift on ONE bbox using Shift+click or Shift+1-5,
+  the determined shift (offset_x, offset_y) is applied to ALL bboxes in the frame.
+- This dramatically reduces annotation time from bbox-by-bbox to frame-by-frame.
+- User can skip frames until finding a good representative bbox to validate.
 """
 
 import cv2
@@ -166,6 +174,14 @@ class BBoxCorrectionTool:
         random.shuffle(samples)
         self.samples = samples[:max_samples]
         
+        # Build frame-to-samples index for apply-to-all feature
+        self.frame_samples = {}  # {(flight_key, frame_id): [sample_indices]}
+        for idx, s in enumerate(self.samples):
+            key = (s['flight_key'], s['frame_id'])
+            if key not in self.frame_samples:
+                self.frame_samples[key] = []
+            self.frame_samples[key].append(idx)
+        
         # Debug: Show visibility distribution in selected samples
         vis_counts = {}
         for s in self.samples:
@@ -173,6 +189,7 @@ class BBoxCorrectionTool:
             vis_counts[v] = vis_counts.get(v, 0) + 1
         print(f"Collected {len(self.samples)} samples (skipped {skipped_occluded} occluded)")
         print(f"Visibility distribution in selected samples: {vis_counts}")
+        print(f"Unique frames: {len(self.frame_samples)}")
         
         return self.samples
     
@@ -632,9 +649,10 @@ class CorrectionGUI:
             rgb_crop_canvas.pack(side=tk.LEFT, padx=8)
             
             # Use This button (acts as Good/Accept) - wider button
-            select_btn = tk.Button(row_frame, text=f"✓ Use This ({i+1})", width=14,
-                                   bg='#4CAF50', fg='white', font=('Arial', 10, 'bold'),
-                                   command=lambda idx=i: self.use_method(idx))
+            # Shift+Click applies to all bboxes in frame
+            select_btn = tk.Button(row_frame, text=f"✓ Use ({i+1}) [Shift=All]", width=18,
+                                   bg='#4CAF50', fg='white', font=('Arial', 10, 'bold'))
+            select_btn.bind('<Button-1>', lambda e, idx=i: self._on_select_click(e, idx))
             select_btn.pack(side=tk.LEFT, padx=10)
             
             self.method_frames.append({
@@ -714,6 +732,13 @@ class CorrectionGUI:
         self.root.bind('4', lambda e: self.use_method(3))
         self.root.bind('5', lambda e: self.use_method(4))
         
+        # Shift+number: Apply shift to ALL bboxes in frame
+        self.root.bind('!', lambda e: self.use_method_apply_all(0))  # Shift+1
+        self.root.bind('@', lambda e: self.use_method_apply_all(1))  # Shift+2
+        self.root.bind('#', lambda e: self.use_method_apply_all(2))  # Shift+3
+        self.root.bind('$', lambda e: self.use_method_apply_all(3))  # Shift+4
+        self.root.bind('%', lambda e: self.use_method_apply_all(4))  # Shift+5
+        
     def cv2_to_tk(self, img, max_w=200, max_h=200):
         if img is None or img.size == 0:
             return None
@@ -760,6 +785,13 @@ class CorrectionGUI:
         
         return img
     
+    def _on_select_click(self, event, idx):
+        """Handle click on select button - detect Shift for apply-to-all"""
+        if event.state & 0x1:  # Shift key is pressed
+            self.use_method_apply_all(idx)
+        else:
+            self.use_method(idx)
+    
     def select_method(self, idx):
         """Select a specific method as the best one (just preview)"""
         if self.current_data and idx < len(self.current_data['results']):
@@ -771,6 +803,146 @@ class CorrectionGUI:
         if self.current_data and idx < len(self.current_data['results']):
             self.current_result_idx = idx
             self.mark_good()
+    
+    def use_method_apply_all(self, idx):
+        """
+        Use a specific method and apply its shift to ALL bboxes in the current frame.
+        This is triggered by Shift+click or Shift+number key.
+        
+        The offset (offset_x, offset_y) determined from the current bbox is applied
+        to all other bboxes in the same frame, dramatically speeding up annotation.
+        """
+        if self.current_data is None or not self.current_data['results']:
+            return
+        
+        if idx >= len(self.current_data['results']):
+            return
+        
+        result = self.current_data['results'][idx]
+        sample = self.current_data['sample']
+        offset_x = result['offset_x']
+        offset_y = result['offset_y']
+        method_name = result['method']
+        
+        # Get all samples in this frame
+        frame_key = (sample['flight_key'], sample['frame_id'])
+        frame_sample_indices = self.tool.frame_samples.get(frame_key, [])
+        
+        if len(frame_sample_indices) <= 1:
+            # Only one bbox in frame, just use normal method
+            self.use_method(idx)
+            return
+        
+        print(f"\n[APPLY TO ALL] Applying offset ({offset_x:+d}, {offset_y:+d}) to {len(frame_sample_indices)} bboxes in frame {frame_key}")
+        
+        # Mark current bbox as good first
+        self.current_result_idx = idx
+        self._record_correction(result, sample, self.current_data)
+        
+        # Apply same offset to all other bboxes in this frame
+        applied_count = 1  # Already applied to current
+        skipped_indices = set()
+        
+        for sample_idx in frame_sample_indices:
+            if sample_idx == self.tool.current_idx:
+                continue  # Skip current (already processed)
+            
+            other_sample = self.tool.samples[sample_idx]
+            other_bbox = other_sample['bbox']
+            
+            # Compute corrected bbox using the same offset
+            corrected_bbox = {
+                'x_min': other_bbox['x_min'] + offset_x,
+                'y_min': other_bbox['y_min'] + offset_y,
+                'x_max': other_bbox['x_max'] + offset_x,
+                'y_max': other_bbox['y_max'] + offset_y,
+                'width': other_bbox['width'],
+                'height': other_bbox['height']
+            }
+            
+            # Create correction record
+            correction = {
+                'flight_key': other_sample['flight_key'],
+                'frame_id': other_sample['frame_id'],
+                'split': other_sample['split'],
+                'original_bbox': other_sample['bbox'],
+                'corrected_bbox': corrected_bbox,
+                'method': method_name,
+                'confidence': result['confidence'],  # Use same confidence as reference
+                'offset_x': offset_x,
+                'offset_y': offset_y,
+                'annotation': other_sample['annotation'],
+                'applied_from_reference': True,  # Mark as derived from another bbox
+                'reference_bbox': sample['bbox']
+            }
+            
+            self.tool.corrections.append(correction)
+            applied_count += 1
+            skipped_indices.add(sample_idx)
+        
+        print(f"[APPLY TO ALL] Applied correction to {applied_count} bboxes total")
+        
+        # Mark these samples as processed by skipping them
+        # We'll jump past all samples in this frame
+        self._skip_frame_samples(skipped_indices)
+    
+    def _record_correction(self, result, sample, data):
+        """Record a single correction without advancing to next sample"""
+        thermal_crop = data['thermal_crop']
+        rgb_crop = data['rgb_original_crop']
+        
+        thermal_mean = float(np.mean(thermal_crop))
+        thermal_std = float(np.std(thermal_crop))
+        rgb_mean = float(np.mean(rgb_crop)) if rgb_crop.size > 0 else 0
+        rgb_std = float(np.std(rgb_crop)) if rgb_crop.size > 0 else 0
+        
+        correction = {
+            'flight_key': sample['flight_key'],
+            'frame_id': sample['frame_id'],
+            'split': sample['split'],
+            'original_bbox': sample['bbox'],
+            'corrected_bbox': result['corrected_bbox'],
+            'method': result['method'],
+            'confidence': result['confidence'],
+            'offset_x': result['offset_x'],
+            'offset_y': result['offset_y'],
+            'annotation': sample['annotation'],
+            'thermal_brightness': thermal_mean,
+            'thermal_contrast': thermal_std,
+            'rgb_brightness': rgb_mean,
+            'rgb_contrast': rgb_std,
+            'bbox_size': sample['bbox']['width'] * sample['bbox']['height']
+        }
+        
+        self.tool.corrections.append(correction)
+        self.tool.good_params.append({
+            'method': result['method'],
+            'confidence': result['confidence'],
+            'thermal_brightness': thermal_mean,
+            'rgb_brightness': rgb_mean
+        })
+    
+    def _skip_frame_samples(self, skipped_indices):
+        """
+        Skip all samples that were processed via apply-to-all.
+        Find the next sample that wasn't in the skipped set.
+        """
+        self.tool.current_idx += 1
+        
+        while self.tool.current_idx < len(self.tool.samples):
+            if self.tool.current_idx in skipped_indices:
+                self.tool.current_idx += 1
+            else:
+                break
+        
+        if self.tool.current_idx >= len(self.tool.samples):
+            self.show_completion()
+        else:
+            self.load_current_sample()
+        
+        # Update pattern display
+        if len(self.tool.corrections) >= 3:
+            self.update_quick_pattern()
     
     def analyze_patterns(self):
         """Analyze patterns in good vs bad corrections"""
@@ -883,9 +1055,14 @@ class CorrectionGUI:
         else:
             cert_display = f"✗ UNSURE ({certainty:.0%})"
         
+        # Count bboxes in current frame for apply-to-all hint
+        frame_key = (sample['flight_key'], sample['frame_id'])
+        frame_bbox_count = len(self.tool.frame_samples.get(frame_key, []))
+        frame_hint = f" | Frame has {frame_bbox_count} bboxes" if frame_bbox_count > 1 else ""
+        
         self.info_label.config(text=f"Flight: {sample['flight_key']} | Frame: {sample['frame_id']} | "
                                     f"BBox: {data['original_bbox']['width']}x{data['original_bbox']['height']} | "
-                                    f"{cert_display}")
+                                    f"{cert_display}{frame_hint}")
         
         # Show certainty reasoning in a tooltip-like way (update stats label)
         self.stats_label.config(text=f"Good: {len(self.tool.corrections)} | Bad: {len(self.tool.bad_cases)} | {certainty_reason[:60]}...")
@@ -1410,11 +1587,14 @@ def main():
     print(f"\nLoaded {len(tool.samples)} samples for verification")
     
     print("\nKeyboard shortcuts:")
-    print("  1-5 - Accept with method")
-    print("  R - Reject")
-    print("  S - Skip")
-    print("  ←/→ - Navigate")
-    print("  ESC - Save & Quit")
+    print("  1-5       - Accept with method (single bbox)")
+    print("  Shift+1-5 - Apply shift to ALL bboxes in frame")
+    print("  R         - Reject")
+    print("  S         - Skip")
+    print("  ←/→       - Navigate")
+    print("  ESC       - Save & Quit")
+    print("\nTip: Use Shift+click or Shift+number to apply a validated")
+    print("     shift from one bbox to all bboxes in the frame.")
     
     gui = CorrectionGUI(tool)
     gui.run()
