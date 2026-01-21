@@ -1,9 +1,9 @@
 # 🔥 Thermal-RGB BBox Correction Toolkit
 
 <p align="center">
-  <img src="docs/assets/example_good_1.png" width="60%" alt="Good correction example 1"/>
-  <img src="docs/assets/example_good_2.png" width="60%" alt="Good correction example 2"/>
-  <img src="docs/assets/example_good_3.png" width="60%" alt="Good correction example 3"/>
+  <img src="docs/assets/example_good_1.png" width="80%" alt="Good correction example 1"/>
+  <img src="docs/assets/example_good_2.png" width="80%" alt="Good correction example 2"/>
+  <img src="docs/assets/example_good_3.png" width="80%" alt="Good correction example 3"/>
 </p>
 
 <p align="center"><em>Examples of successful automatic bounding box corrections - Original (left) vs Corrected (right)</em></p>
@@ -31,7 +31,7 @@ In our testing on **406 samples**:
 - ⚠️ **1/406 (0.25%)** showed degraded results
 
 <p align="center">
-  <img src="docs/assets/example_bad_1.png" width="60%" alt="Example of failed correction"/>
+  <img src="docs/assets/example_bad_1.png" width="80%" alt="Example of failed correction"/>
 </p>
 <p align="center"><em>The single case (out of 406) where automatic correction produced worse results. Results may vary depending on your specific dataset.</em></p>
 
@@ -131,7 +131,7 @@ your_data/
 ## ⚠️ Important Notes
 
 ### Resolution Matching
-- **Thermal and RGB images MUST have the same resolution** (e.g., both 640×512 or both upscaled to matching dimensions)
+- **Thermal and RGB images MUST have the same resolution** (e.g., both 1024×1024 or both upscaled to matching dimensions)
 - If your original RGB images are higher resolution, resize them to match thermal resolution before correction
 - The bounding box coordinates are based on pixel positions, so resolution mismatch will cause incorrect corrections
 
