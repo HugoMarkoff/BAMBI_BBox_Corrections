@@ -301,7 +301,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- Developed for the BAMBI project for wildlife detection from aerial thermal imagery
+- Developed for the BAMBI project for wildlife detection from aerial thermal imagery - https://www.bambi.eco/ 
 - Uses OpenCV for image processing and template matching
 
 ## 📧 Contact
